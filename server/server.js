@@ -22,7 +22,6 @@ io.on('connection', function (socket) {
 
   // hver gang det kommer data på porten
   port.on('readable', function () {
-
     // emmiter en pakke 'a' med dataen
     socket.emit('a', port.read().toString());
   });

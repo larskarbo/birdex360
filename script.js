@@ -126,7 +126,7 @@ function addBird(degree, distance) {
     }).opacity(0)
 }
 
-function registerHit() {
+function registerHit(data) {
   hits.push({
     degree: currentDegree,
     distance: 0.5,
@@ -139,13 +139,17 @@ function registerHit() {
   Connectivity:
 */
 
-var socket = io('http://172.20.10.10:3000');
+var socket = io('http://172.20.10.11:3000');
 socket.on('connect', function () {
   console.log('connected')
 });
 
 socket.on('a', function (data) {
-  registerHit(data)
+  console.log('asdf', data)
+  data.split('\n').forEach(function (asdfff, i) {
+    if(i == 0)
+    registerHit(asdfff)
+  })
 });
 
 socket.on('disconnect', function () {
