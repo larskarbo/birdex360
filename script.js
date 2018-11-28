@@ -8,10 +8,11 @@ const h = canvas.height;
 /* svg init */
 const svgjs = SVG('svgcont')
 var bird = svgjs.circle().radius(10)
+window.bird = bird
 bird.fill('red').move(-9999, -9999)
 
 /* vars */
-const durationAround = 10000;
+const durationAround = 34450;
 let currentDegree;
 let forrigeUtslag = 50
 const hits = [
@@ -117,12 +118,16 @@ function addBird(degree, distance) {
   if (distance > 50) {
     return
   }
-  const from = degreesToXY(degree, Math.min(250 * (forrigeUtslag / 50), 250))
+  const from = degreesToXY(degree, Math.min(250 * (distance / 50), 250))
 
-  bird.clone().move(from.x, from.y)
+  const newbird = bird.clone()
+  setTimeout(() => {
+    newbird.node.remove()
+  }, (durationAround / 2) - 1000)
+  newbird.move(from.x, from.y)
     .animate({
       delay: (durationAround / 2) - 1000,
-      duration: 5000
+      duration: 3000
     }).opacity(0)
 }
 
@@ -147,7 +152,7 @@ socket.on('connect', function () {
 socket.on('a', function (data) {
   console.log('asdf', data)
   data.split('\n').forEach(function (asdfff, i) {
-    if(i == 0)
+    // if(i == 0)
     registerHit(asdfff)
   })
 });
